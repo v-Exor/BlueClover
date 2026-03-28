@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueClover OS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="desktop" id="desktop">
+
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="icon" onclick="openWindow('explorerWindow')">
+        <div class="icon-img">📁</div><span>File Explorer</span>
+      </div>
+      <div class="icon" onclick="openWindow('terminalWindow')">
+        <div class="icon-img">💻</div><span>Terminal</span>
+      </div>
+      <div class="icon" onclick="openWindow('notesWindow')">
+        <div class="icon-img">📝</div><span>Notes</span>
+      </div>
+      <div class="icon" onclick="openWindow('calculatorWindow')">
+        <div class="icon-img">🧮</div><span>Calculator</span>
+      </div>
+      <div class="icon" onclick="openWindow('schedulerWindow')">
+        <div class="icon-img">⚙️</div><span>CPU Scheduler</span>
+      </div>
+      <div class="icon" onclick="openWindow('memoryWindow')">
+        <div class="icon-img">🧠</div><span>Memory Manager</span>
+      </div>
+      <div class="icon" onclick="openWindow('taskManagerWindow')">
+        <div class="icon-img">📊</div><span>Task Manager</span>
+      </div>
+      <div class="icon" onclick="logout()">
+        <div class="icon-img">🚪</div><span>Logout</span>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div class="start-menu hidden" id="startMenu">
+      <div class="start-header">
+        <h2>BlueClover OS</h2>
+        <p>Modern OS Simulation</p>
+      </div>
+      <div class="start-apps">
+        <button onclick="openWindow('explorerWindow')">📁 File Explorer</button>
+        <button onclick="openWindow('terminalWindow')">💻 Terminal</button>
+        <button onclick="openWindow('notesWindow')">📝 Notes</button>
+        <button onclick="openWindow('calculatorWindow')">🧮 Calculator</button>
+        <button onclick="openWindow('schedulerWindow')">⚙️ CPU Scheduler</button>
+        <button onclick="openWindow('memoryWindow')">🧠 Memory Manager</button>
+        <button onclick="openWindow('taskManagerWindow')">📊 Task Manager</button>
+        <button onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+
+    <!-- File Explorer -->
+    <div class="window hidden" id="explorerWindow" style="top: 90px; left: 180px;">
+      <div class="window-header" onmousedown="dragStart(event, 'explorerWindow')">
+        <span>📁 File Explorer</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('explorerWindow')">—</button>
+          <button onclick="closeWindow('explorerWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <h3>System Files</h3>
+        <ul class="file-list">
+          <li>📄 boot_config.sys</li>
+          <li>📄 fcfs_processes.txt</li>
+          <li>📄 memory_map.log</li>
+          <li>📄 user_accounts.json</li>
+          <li>📁 system32/</li>
+          <li>📁 programs/</li>
+          <li>📁 documents/</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Terminal -->
+    <div class="window hidden" id="terminalWindow" style="top: 130px; left: 250px;">
+      <div class="window-header" onmousedown="dragStart(event, 'terminalWindow')">
+        <span>💻 Terminal</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('terminalWindow')">—</button>
+          <button onclick="closeWindow('terminalWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body terminal">
+        <div id="terminalOutput">
+          <p>> Welcome to BlueClover Terminal</p>
+          <p>> Type: help</p>
+        </div>
+        <div class="terminal-input-row">
+          <span>>></span>
+          <input type="text" id="terminalInput" placeholder="Enter command..." onkeydown="handleTerminal(event)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="window hidden" id="notesWindow" style="top: 170px; left: 320px;">
+      <div class="window-header" onmousedown="dragStart(event, 'notesWindow')">
+        <span>📝 Notes</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('notesWindow')">—</button>
+          <button onclick="closeWindow('notesWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <textarea id="notesArea" placeholder="Write your OS notes here..."></textarea>
+      </div>
+    </div>
+
+    <!-- Calculator -->
+    <div class="window hidden" id="calculatorWindow" style="top: 220px; left: 390px;">
+      <div class="window-header" onmousedown="dragStart(event, 'calculatorWindow')">
+        <span>🧮 Calculator</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('calculatorWindow')">—</button>
+          <button onclick="closeWindow('calculatorWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <input type="text" id="calcDisplay" readonly>
+        <div class="calc-grid">
+          <button onclick="appendCalc('7')">7</button>
+          <button onclick="appendCalc('8')">8</button>
+          <button onclick="appendCalc('9')">9</button>
+          <button onclick="appendCalc('/')">÷</button>
+
+          <button onclick="appendCalc('4')">4</button>
+          <button onclick="appendCalc('5')">5</button>
+          <button onclick="appendCalc('6')">6</button>
+          <button onclick="appendCalc('*')">×</button>
+
+          <button onclick="appendCalc('1')">1</button>
+          <button onclick="appendCalc('2')">2</button>
+          <button onclick="appendCalc('3')">3</button>
+          <button onclick="appendCalc('-')">−</button>
+
+          <button onclick="appendCalc('0')">0</button>
+          <button onclick="appendCalc('.')">.</button>
+          <button onclick="calculateResult()">=</button>
+          <button onclick="appendCalc('+')">+</button>
+
+          <button class="clear-btn" onclick="clearCalc()">C</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CPU Scheduler -->
+    <div class="window hidden" id="schedulerWindow" style="top: 100px; left: 450px; width: 560px;">
+      <div class="window-header" onmousedown="dragStart(event, 'schedulerWindow')">
+        <span>⚙️ CPU Scheduling Simulator (FCFS)</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('schedulerWindow')">—</button>
+          <button onclick="closeWindow('schedulerWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <h3>Input Processes</h3>
+        <div class="form-grid scheduler-grid">
+          <input type="text" id="pid" placeholder="Process ID (e.g. P1)">
+          <input type="number" id="arrival" placeholder="Arrival Time">
+          <input type="number" id="burst" placeholder="Burst Time">
+          <button onclick="addProcess()">Add Process</button>
+        </div>
+
+        <table class="styled-table" id="processTable">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Arrival Time</th>
+              <th>Burst Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="scheduler-actions">
+          <button class="primary-btn" onclick="runFCFS()">Run FCFS</button>
+          <button class="danger-btn" onclick="clearProcesses()">Clear</button>
+        </div>
+
+        <div id="ganttChart" class="gantt-chart"></div>
+        <div id="fcfsResults"></div>
+      </div>
+    </div>
+
+    <!-- Memory Management -->
+    <div class="window hidden" id="memoryWindow" style="top: 130px; left: 520px; width: 560px;">
+      <div class="window-header" onmousedown="dragStart(event, 'memoryWindow')">
+        <span>🧠 Memory Management Simulator</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('memoryWindow')">—</button>
+          <button onclick="closeWindow('memoryWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <h3>First Fit Allocation</h3>
+        <input type="text" id="blockInput" placeholder="Enter Memory Blocks: 100,500,200,300,600">
+        <input type="text" id="processInput" placeholder="Enter Process Sizes: 212,417,112,426">
+
+        <button class="primary-btn" onclick="runMemoryManagement()">Allocate Memory</button>
+
+        <div id="memoryResults"></div>
+      </div>
+    </div>
+
+    <!-- Task Manager -->
+    <div class="window hidden" id="taskManagerWindow" style="top: 160px; left: 600px; width: 600px;">
+      <div class="window-header" onmousedown="dragStart(event, 'taskManagerWindow')">
+        <span>📊 Task Manager</span>
+        <div class="window-controls">
+          <button onclick="minimizeWindow('taskManagerWindow')">—</button>
+          <button onclick="closeWindow('taskManagerWindow')">✕</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h4>CPU Usage</h4>
+            <p id="cpuUsage">37%</p>
+          </div>
+          <div class="stat-card">
+            <h4>Memory Usage</h4>
+            <p id="memoryUsage">58%</p>
+          </div>
+          <div class="stat-card">
+            <h4>Running Tasks</h4>
+            <p id="taskCount">7</p>
+          </div>
+        </div>
+
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Process Name</th>
+              <th>Status</th>
+              <th>Memory</th>
+            </tr>
+          </thead>
+          <tbody id="taskManagerTable">
+            <tr><td>101</td><td>explorer.exe</td><td>Running</td><td>120 MB</td></tr>
+            <tr><td>102</td><td>terminal.exe</td><td>Running</td><td>90 MB</td></tr>
+            <tr><td>103</td><td>notes.exe</td><td>Running</td><td>60 MB</td></tr>
+            <tr><td>104</td><td>calculator.exe</td><td>Running</td><td>40 MB</td></tr>
+            <tr><td>105</td><td>scheduler.exe</td><td>Running</td><td>130 MB</td></tr>
+            <tr><td>106</td><td>memory_manager.exe</td><td>Running</td><td>150 MB</td></tr>
+            <tr><td>107</td><td>system_ui.exe</td><td>Running</td><td>180 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <button class="start-btn" onclick="toggleStartMenu()">⊞</button>
+
+    <div class="taskbar-apps">
+      <button onclick="openWindow('explorerWindow')">📁</button>
+      <button onclick="openWindow('terminalWindow')">💻</button>
+      <button onclick="openWindow('notesWindow')">📝</button>
+      <button onclick="openWindow('calculatorWindow')">🧮</button>
+      <button onclick="openWindow('schedulerWindow')">⚙️</button>
+      <button onclick="openWindow('memoryWindow')">🧠</button>
+      <button onclick="openWindow('taskManagerWindow')">📊</button>
+    </div>
+
+    <div class="taskbar-right">
+      <span id="clock"></span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
